@@ -5,9 +5,33 @@
 
 void rotateRel_naive(double deltaAngle);
 
+int calcNextState( int sensor ){
+	
+	
+	
+	/*if( !sen0 && !sen1 && sen2 && !sen3 && !sen4 ){
+		return 0; //Forward
+	}*/
+	
+	
+	
+	/*
+	 * Return codes:0
+	 * 
+	 * 0 - Forward
+	 * 1 - Adjustment turn to right
+	 * 2 - Adjustment turn to left
+	 * 3 - Normal turn to right
+	 * 4 - Normal turn to left
+	 * 5 - Hard turn to right
+	 * 6 - Hard turn to left
+	 */
+	
+}
+
 int main(void)
 {
-	int groundSensor;
+	int sensor;
 
 	initPIC32();
 	closedLoopControl( false );
@@ -19,62 +43,42 @@ int main(void)
 	{
 		printf("Press start to continue\n");
 		while(!startButton());
-		//enableObstSens();
-
-		
 		do
 		{
-		//	setVel2(50, 50);
-			waitTick20ms();						// Wait for next 40ms tick
-			readAnalogSensors();				// Fill in "analogSensors" structure
-			groundSensor = readLineSensors(0);	// Read ground sensor
-			printf("Obst_left=%03d, Obst_center=%03d, Obst_right=%03d, Bat_voltage=%03d, Ground_sens=", analogSensors.obstSensLeft,
-					analogSensors.obstSensFront, analogSensors.obstSensRight, analogSensors.batteryVoltage);
-
-			printInt(groundSensor, 2 | 5 << 16);	// System call
-			short sen_0 = (groundSensor  & 0x01);
-			short sen_1 = (groundSensor & 0x02)>>1;
-			short sen_2 = (groundSensor & 0x04)>>2;
-			short sen_3 = (groundSensor & 0x08)>>3;
-			short sen_4 = (groundSensor & 0x10)>>4;
-
-
-			/*if(!(sen_1|sen_2|sen_3)){
-				setVel2(-52,-49);
-			}else */
-			/*if(!(sen_1&sen_3)){
-				setVel2(0,0);
-			}else */if(!sen_2){
-
-				if(sen_1&sen_3){
-					setVel2(52,49);
-				}else if(!sen_3){
-					setVel2(35,73);
-				}else if(!sen_1){
-					setVel2(75,33);
-				}else{
-					setVel2(52,49);
-				}
-			} else if(!sen_3){
-				setVel2(20,97);
-			}else if(!sen_1){
-				setVel2(100,17);
-			}else{
-				setVel2(52,49);
-
+			sensor = readLineSensors(0);
+			//Only the middle sensor is active
+			switch( sensor ) {
+				case 0b00100:
+					setVel2( 70, 70 );
+					break;
+				case 0b00110:
+					setVel2( 70, 50 );
+					break;
+				case 0b01100:
+					setVel2( 50, 70 );
+					break;
+				case 0b01000:
+				case 0b11100:
+					setVel2( 0, 70 );
+					break;
+				case 0b00010:
+				case 0b00111:
+					setVel2( 70, 0 );
+					break;
+				default:
+					break;
 			}
 
 
-			printf("	%d %d %d %d %d ", sen_4, sen_3, sen_2, sen_1, sen_0);
-
-
-			printf("\n");
 		} while(!stopButton());
 		setVel2(0, 0);
 		//disableObstSens();
-		
+
 	}
 	return 0;
+
+
+
 }
 
 
