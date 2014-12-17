@@ -9,13 +9,13 @@ void rotateRel_naive(double deltaAngle);
 	
 	
 	
-	/*if( !sen0 && !sen1 && sen2 && !sen3 && !sen4 ){
+	if( !sen0 && !sen1 && sen2 && !sen3 && !sen4 ){
 		return 0; //Forward
-	}*/
+	}
 	
 	
 	
-	/*
+	
 	 * Return codes:0
 	 * 
 	 * 0 - Forward
@@ -43,6 +43,7 @@ int main(void)
 	{
 		printf("Press start to continue\n");
 		while(!startButton());
+		XZZ
 		do
 		{
 			//  try adding tick;
@@ -50,6 +51,7 @@ int main(void)
 			sensor = readLineSensors(0);
 			printf("Ground Sendor= ");
 			printInt(sensor, 2 | 5 << 16);
+			printf("\n");
 			//Only the middle sensor is active
 			switch( sensor ) {
 				case 0b00100:
