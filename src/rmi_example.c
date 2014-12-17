@@ -5,7 +5,7 @@
 
 void rotateRel_naive(double deltaAngle);
 
-int calcNextState( int sensor ){
+/*int calcNextState( int sensor ){
 	
 	
 	
@@ -25,9 +25,9 @@ int calcNextState( int sensor ){
 	 * 4 - Normal turn to left
 	 * 5 - Hard turn to right
 	 * 6 - Hard turn to left
-	 */
+	 
 	
-}
+}*/
 
 int main(void)
 {
@@ -45,7 +45,11 @@ int main(void)
 		while(!startButton());
 		do
 		{
+			//  try adding tick;
+			
 			sensor = readLineSensors(0);
+			printf("Ground Sendor= ");
+			printInt(sensor, 2 | 5 << 16);
 			//Only the middle sensor is active
 			switch( sensor ) {
 				case 0b00100:
@@ -68,7 +72,7 @@ int main(void)
 				default:
 					break;
 			}
-
+		
 
 		} while(!stopButton());
 		setVel2(0, 0);
