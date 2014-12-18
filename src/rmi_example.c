@@ -43,13 +43,12 @@ int main(void)
 	{
 		printf("Press start to continue\n");
 		while(!startButton());
-		XZZ
 		do
 		{
-			//  try adding tick;
-			
+			//try adding tick;
+			waitTick40ms();
 			sensor = readLineSensors(0);
-			printf("Ground Sendor= ");
+			printf("batery:%d Ground Sensor= ", batteryVoltage());
 			printInt(sensor, 2 | 5 << 16);
 			printf("\n");
 			//Only the middle sensor is active
