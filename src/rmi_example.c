@@ -2,6 +2,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
+#include "controlLib.h"
 
 void rotateRel_naive(double deltaAngle);
 
@@ -43,39 +44,17 @@ int main(void)
 	{
 		printf("Press start to continue\n");
 		while(!startButton());
-		XZZ
 		do
 		{
 			//  try adding tick;
-			
+			waitTick20ms();
 			sensor = readLineSensors(0);
+			
 			printf("Ground Sendor= ");
 			printInt(sensor, 2 | 5 << 16);
 			printf("\n");
 			//Only the middle sensor is active
-			switch( sensor ) {
-				case 0b00100:
-					setVel2( 70, 70 );
-					break;
-				case 0b00110:
-					setVel2( 70, 50 );
-					break;
-				case 0b01100:
-					setVel2( 50, 70 );
-					break;
-				case 0b01000:
-				case 0b11100:
-					setVel2( 0, 70 );
-					break;
-				case 0b00010:
-				case 0b00111:
-					setVel2( 70, 0 );
-					break;
-				default:
-					break;
-			}
-		
-
+			followLine(sensor);
 		} while(!stopButton());
 		setVel2(0, 0);
 		//disableObstSens();
