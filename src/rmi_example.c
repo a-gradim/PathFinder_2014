@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+
+
 void rotateRel_naive(double deltaAngle);
 
 /*int calcNextState( int sensor ){
@@ -32,6 +34,7 @@ void rotateRel_naive(double deltaAngle);
 int main(void)
 {
 	int sensor;
+	
 
 	initPIC32();
 	closedLoopControl( false );
